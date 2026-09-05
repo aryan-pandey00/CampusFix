@@ -2,8 +2,14 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { homeFor, type Role } from "@/lib/roles";
 
-/** Routes reachable without a session. Everything else needs one. */
-const PUBLIC_ROUTES = ["/login", "/signup", "/auth"];
+/**
+ * Routes reachable without a session. Everything else needs one.
+ *
+ * /api/health is here because an uptime monitor has no cookie. It exposes
+ * nothing: it reports whether the database answered, and the query it runs
+ * returns no rows to an unauthenticated caller.
+ */
+const PUBLIC_ROUTES = ["/login", "/signup", "/auth", "/api/health"];
 
 /**
  * `/` is the public landing page, so it is reachable without a session — but
