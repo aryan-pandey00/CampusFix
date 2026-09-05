@@ -9,6 +9,19 @@ same tap has broken four times this year.
 
 CampusFix gives every complaint an owner, a clock and a record.
 
+[![Live demo](https://img.shields.io/badge/Live_demo-campusfix--pro.vercel.app-17553f?style=for-the-badge&logo=vercel&logoColor=white)](https://campusfix-pro.vercel.app)
+
+## Try it
+
+Sign in as any of these. The same complaint looks different to each of them,
+which is the point.
+
+| Role | Email | Password |
+|---|---|---|
+| Student | `student@campusfix.app` | `CampusFix#Test1` |
+| Maintenance office | `admin@campusfix.app` | `CampusFix#Test1` |
+| Department | `electrical@campusfix.app` | `CampusFix#Test1` |
+
 ![Reporting an issue](docs/screenshots/report-an-issue.png)
 
 ## How it works
@@ -27,6 +40,8 @@ open  →  assigned  →  in progress  →  resolved  →  closed
 Every one of those steps is saved with who did it and when, so "what happened to
 my complaint?" always has an answer.
 
+![A complaint's timeline](docs/screenshots/complaint-timeline.png)
+
 ## Who uses it
 
 | | |
@@ -35,7 +50,7 @@ my complaint?" always has an answer.
 | **Maintenance office** | Sees every complaint, routes it to a department, watches what is ageing |
 | **Department** | Sees only its own work — starts it, resolves it, or hands it back |
 
-![The maintenance office dashboard](docs/screenshots/dashboard.png)
+![The maintenance office dashboard](docs/screenshots/office-dashboard.png)
 
 ## The parts that matter
 
@@ -62,29 +77,38 @@ are slowest. A paper register cannot answer that.
 
 ## Built with
 
-Next.js 16 (App Router) · TypeScript · Tailwind CSS with shadcn/ui · Supabase
-for Postgres, authentication and file storage · Recharts.
+| | |
+|---|---|
+| **Next.js 16** — App Router | Pages render on the server, so the browser never holds a database credential and the first paint already has its data |
+| **TypeScript** | The five statuses and three roles are union types, so an impossible state fails at compile time instead of in front of a student |
+| **Supabase** — Postgres | Database, authentication and file storage behind one set of keys, and row-level security is what lets the access rules live in the database instead of the UI |
+| **Tailwind CSS** | Styles sit beside the markup they apply to, so a screen can be read without hunting through a stylesheet |
+| **Recharts** | The reports draw as SVG, so the charts stay sharp at any size and print cleanly |
+| **Vercel** | Builds and deploys from the repository on every push |
 
 ## Running it locally
+
+**1.** Install and start:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Create a Supabase project and put its keys in `.env.local`:
+**2.** Create a Supabase project and put its keys in `.env.local`:
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 ```
 
-Then apply `supabase/migrations/*.sql` in order, in the Supabase SQL editor.
+**3.** Apply `supabase/migrations/*.sql` in order, in the Supabase SQL editor.
 `0009_demo_seed.sql` is sample data and can be skipped.
 
-Two settings in the Supabase dashboard:
+**4.** In the Supabase dashboard, under **Authentication → URL Configuration**,
+add `http://localhost:3000/**` to the redirect list. Without it the emailed
+password-reset link has nowhere to come back to.
 
-- **Authentication → URL Configuration → Redirect URLs**: add your site's URL,
-  or the emailed password-reset link will not come back to the app.
-- The first admin is made by editing that account's `role` in the table editor.
-  After that, admins are managed from inside the app.
+**5.** Sign up through the app, then make that account an admin by changing its
+`role` in the table editor. Every admin after the first one is made from inside
+the app.
