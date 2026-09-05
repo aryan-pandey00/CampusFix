@@ -19,6 +19,8 @@ export type SessionProfile = {
    * `is_admin()` is untouched by it.
    */
   isSuperAdmin: boolean;
+  /** A shared demo account. It cannot delete itself — see 0018. */
+  isProtected: boolean;
 };
 
 /** A staff session, with the department the CHECK constraint guarantees. */
@@ -37,7 +39,9 @@ export async function getSessionProfile(): Promise<SessionProfile | null> {
   // beside a staff member's own name.
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, full_name, role, department_id, is_super_admin, departments(name)")
+    .select(
+      "id, full_name, role, department_id, is_super_admin, is_protected, departments(name)",
+    )
     .eq("id", user.id)
     .single();
 
@@ -53,6 +57,7 @@ export async function getSessionProfile(): Promise<SessionProfile | null> {
     departmentId: (profile.department_id as string | null) ?? null,
     departmentName: relName(profile.departments),
     isSuperAdmin: profile.is_super_admin === true,
+    isProtected: profile.is_protected === true,
   };
 }
 

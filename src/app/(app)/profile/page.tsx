@@ -124,6 +124,17 @@ export default async function ProfilePage() {
               leave nobody able to add or remove an admin.
             </p>
           </Panel>
+        ) : session.isProtected ? (
+          /* Refused by delete_own_account() too, not only here. The README
+             publishes this account's password, so the form would otherwise be
+             a control anyone could press and nobody could complete. */
+          <Panel title="This account cannot be deleted" icon={Lock}>
+            <p className="max-w-prose text-sm text-pretty text-muted-foreground">
+              It is a shared demo account, so it stays available for everyone
+              trying the app. Sign up with your own email to see the full
+              screen, including deletion.
+            </p>
+          </Panel>
         ) : (
           <DeletePanel filedCount={filedCount} />
         )}
