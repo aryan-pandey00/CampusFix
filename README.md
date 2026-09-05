@@ -22,7 +22,7 @@ which is the point.
 | Maintenance office | `admin@campusfix.app` | `CampusFix#Test1` |
 | Department | `electrical@campusfix.app` | `CampusFix#Test1` |
 
-![Reporting an issue](docs/screenshots/report-an-issue.png)
+<img src="docs/screenshots/report-an-issue.png" alt="Reporting an issue" width="720">
 
 ## How it works
 
@@ -40,7 +40,7 @@ open  →  assigned  →  in progress  →  resolved  →  closed
 Every one of those steps is saved with who did it and when, so "what happened to
 my complaint?" always has an answer.
 
-![A complaint's timeline](docs/screenshots/complaint-timeline.png)
+<img src="docs/screenshots/complaint-timeline.png" alt="A complaint's timeline" width="720">
 
 ## Who uses it
 
@@ -50,7 +50,7 @@ my complaint?" always has an answer.
 | **Maintenance office** | Sees every complaint, routes it to a department, watches what is ageing |
 | **Department** | Sees only its own work — starts it, resolves it, or hands it back |
 
-![The maintenance office dashboard](docs/screenshots/office-dashboard.png)
+<img src="docs/screenshots/office-dashboard.png" alt="The maintenance office dashboard" width="720">
 
 ## The parts that matter
 
