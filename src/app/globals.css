@@ -1,0 +1,398 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-chart-6: var(--chart-6);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+   Pine & paper: four hues, one job each. That constraint is the whole point:
+   the previous palette had five unrelated colours in play — a clay brand, teal
+   for In progress, green for Resolved, amber alert boxes and red Urgent — and
+   clay sits in the same red-orange band as "urgent" and "warning", so the
+   brand and the alarms competed for the same colour on every screen.
+*/
+:root {
+  --background: #f3f4f1;
+  --foreground: #111613;
+  --card: #ffffff;
+  --card-foreground: #111613;
+  --popover: #ffffff;
+  --popover-foreground: #111613;
+
+  --primary: #17553f;
+  --primary-foreground: #f4f8f5;
+  --secondary: #e7eae5;
+  --secondary-foreground: #26302b;
+  --muted: #eceee9;
+  --muted-foreground: #5d6862;
+  --accent: #e9ece7;
+  --accent-foreground: #26302b;
+  --destructive: #b3261e;
+  --destructive-foreground: #fff1f0;
+
+  --border: #e0e4de;
+  --input: #d3d9d2;
+  --ring: #17553f;
+
+  /* Charts, and the one measured decision in this file. */
+  --chart-1: #0d3527;
+  --chart-2: #15503b;
+  --chart-3: #1e6a4d;
+  --chart-4: #2b805e;
+  --chart-5: #419a73;
+  --chart-6: #7ab89c;
+
+  --chart-open: #e8930c;   /* nothing has started */
+  --chart-active: #2f7fe8; /* assigned, or being worked on */
+  --chart-done: #12a06e;   /* resolved, or confirmed closed */
+
+  --radius: 0.625rem;
+
+  /* The nav rail is ink, not a tinted page. It gives the layout a hard edge to
+     hang off and keeps the brand green out of the chrome, where it would
+     otherwise be shouting on every screen. */
+  --sidebar: #0f1714;
+  --sidebar-foreground: #e8ede9;
+  --sidebar-muted: #8d9a93;
+  --sidebar-primary: #5cc79a;
+  --sidebar-primary-foreground: #0f1714;
+  --sidebar-accent: #1b2721;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1e2b25;
+  --sidebar-ring: #5cc79a;
+}
+.dark {
+  --background: #0f1512;
+  --foreground: #e9eeea;
+  --card: #161d19;
+  --card-foreground: #e9eeea;
+  --popover: #161d19;
+  --popover-foreground: #e9eeea;
+
+  /* Pine lifted for a dark ground rather than reused — #17553f goes to mud
+     against #0f1512 and fails contrast against it. */
+  --primary: #4fbb8d;
+  --primary-foreground: #0b1310;
+  --secondary: #1f2823;
+  --secondary-foreground: #e9eeea;
+  --muted: #1a221e;
+  --muted-foreground: #93a09a;
+  --accent: #222c27;
+  --accent-foreground: #e9eeea;
+  --destructive: #e8756c;
+  --destructive-foreground: #1a0f0e;
+
+  --border: #232d28;
+  --input: #2c3832;
+  --ring: #4fbb8d;
+
+  /*
+     The ramp runs the other way here: step 1 is the most emphasis, and on a
+     near-black ground that is the lightest step, not the darkest.
+  */
+  --chart-1: #eafaf1;
+  --chart-2: #c2e7d5;
+  --chart-3: #98d2b6;
+  --chart-4: #6dbb98;
+  --chart-5: #4a9f79;
+  --chart-6: #2a7657;
+
+  /*
+     Only amber moves. Blue and green already sit inside the dark band, and the
+     band is *lower* than the light one (L 0.48-0.67 against 0.43-0.77) — a
+     saturated colour that would be pleasant on paper glares on ink.
+  */
+  --chart-open: #cc8109;
+  --chart-active: #2f7fe8;
+  --chart-done: #12a06e;
+
+  --sidebar: #0b100e;
+  --sidebar-foreground: #e8ede9;
+  --sidebar-muted: #8d9a93;
+  --sidebar-primary: #5cc79a;
+  --sidebar-primary-foreground: #0b100e;
+  --sidebar-accent: #18211d;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1a2420;
+  --sidebar-ring: #5cc79a;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    /* The reason the old pages stopped halfway down the screen: a percentage
+       min-height chain through a column flex container collapses, so the shell
+       was only ever as tall as its content. Viewport units do not care. */
+    min-height: 100dvh;
+  }
+  ::selection {
+    background: color-mix(in oklch, var(--primary) 22%, transparent);
+  }
+  /* Chrome paints its own pale blue over autofilled fields, which broke the
+     palette on the one screen everybody sees first. */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--foreground);
+    -webkit-box-shadow: 0 0 0 100px var(--card) inset;
+    caret-color: var(--foreground);
+  }
+  /* Digits that sit in a column should line up; body prose should not be
+     forced into monospace-width figures. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/*
+   Chart tokens: grid, axis and label get their own steps rather than reusing
+   the UI border tokens: panel borders are tuned to separate surfaces, and at
+   that weight a gridline competes with the bars it sits behind.
+*/
+.viz-root {
+  --viz-grid: #e8ebe6;
+  --viz-axis: #dbe0da;
+  --viz-label: #6b746e;
+}
+
+.dark .viz-root {
+  --viz-grid: #222b26;
+  --viz-axis: #2c3832;
+  --viz-label: #8b968f;
+}
+
+/* Motion — landing page only Three mechanisms: */
+@keyframes cf-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: cf-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Scroll-revealed blocks. Hidden until the observer marks them shown.
+   24px of travel over 0.7s: at 14px and half a second the movement was too
+   small to register as movement at all. */
+.reveal > *:not(.no-reveal) {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal[data-shown] > *:not(.no-reveal) {
+  opacity: 1;
+  transform: none;
+}
+
+/* Children of a .stagger inside a revealed block come in one after another.
+   --i is set per child, so the delay is data rather than a class per position.
+   The touch of scale is what separates "the card arrived" from "the card was
+   always there and briefly faded". */
+.reveal .stagger > * {
+  opacity: 0;
+  transform: translateY(22px) scale(0.985);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+.reveal[data-shown] .stagger > * {
+  opacity: 1;
+  transform: none;
+}
+
+/*
+   The flowing rail: the five states are a sequence, so the section animates
+   like one: a single line travels the whole row and each station wakes as it
+   is reached.
+*/
+.flow-fill {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.28s linear 0.4s;
+}
+.reveal[data-shown] .flow-fill {
+  transform: scaleX(1);
+}
+
+/* The vertical equivalent, one segment per step, for the stacked layout. */
+.flow-seg {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.34s ease-out calc(var(--d, 0ms) + 120ms);
+}
+.reveal[data-shown] .flow-seg {
+  transform: scaleY(1);
+}
+
+/* A station: pops in slightly past full size, and takes the brand colour at
+   the moment the line reaches it. */
+.flow-node {
+  opacity: 0;
+  transform: scale(0.55);
+  border-color: var(--border);
+  color: var(--muted-foreground);
+  transition:
+    opacity 0.35s ease var(--d, 0ms),
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms),
+    border-color 0.4s ease var(--d, 0ms),
+    color 0.4s ease var(--d, 0ms),
+    box-shadow 0.4s ease var(--d, 0ms);
+}
+.reveal[data-shown] .flow-node {
+  opacity: 1;
+  transform: none;
+  border-color: color-mix(in oklch, var(--primary) 45%, transparent);
+  color: var(--primary);
+  box-shadow: 0 0 0 4px color-mix(in oklch, var(--primary) 8%, transparent);
+}
+
+/* The words follow their station, a beat behind it. */
+.flow-body {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.5s ease calc(var(--d, 0ms) + 90ms),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--d, 0ms) + 90ms);
+}
+.reveal[data-shown] .flow-body {
+  opacity: 1;
+  transform: none;
+}
+
+/* Bars in the hero mock grow from the axis. Scale, not width: no reflow. */
+@keyframes cf-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.grow {
+  transform-origin: left;
+  animation: cf-grow 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Same idea for the column chart in the hero mock: the bars rise out of the
+   axis. scaleY on a bar whose height is already laid out, so fourteen of them
+   animating at once still cost no layout work. */
+@keyframes cf-grow-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.grow-y {
+  transform-origin: bottom;
+  animation: cf-grow-y 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Nothing arms `data-shown` without JavaScript, so the reveal would hide those
+   sections permanently. This puts them back. */
+@media (scripting: none) {
+  .reveal > *,
+  .reveal .stagger > *,
+  .flow-node,
+  .flow-body {
+    opacity: 1;
+    transform: none;
+  }
+  .flow-fill,
+  .flow-seg {
+    transform: none;
+  }
+  .flow-node {
+    border-color: color-mix(in oklch, var(--primary) 45%, transparent);
+    color: var(--primary);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .grow,
+  .grow-y {
+    animation: none;
+  }
+  .reveal > *,
+  .reveal .stagger > *,
+  .flow-node,
+  .flow-body {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .flow-fill,
+  .flow-seg {
+    transform: none;
+    transition: none;
+  }
+  .flow-node {
+    border-color: color-mix(in oklch, var(--primary) 45%, transparent);
+    color: var(--primary);
+  }
+}
